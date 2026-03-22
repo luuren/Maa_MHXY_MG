@@ -9,21 +9,21 @@
     "mirrorchyan_multiplatform": true,
     "controller": [
         {
+            "name": "PC",
+            "label": "PC",
+            "type": "Win32",
+            "win32": {
+                "window_regex": "梦幻西游*",
+                "screencap": "PrintWindow",
+                "mouse": "SendMessageWithCursorPos",
+                "keyboard": "SendMessageWithCursorPos"
+            },
+            "permission_required": true
+        },
+        {
             "name": "ADB",
             "label": "模拟器",
             "type": "Adb"
-        },
-        {
-            "name": "Win32",
-            "label": "PC客户端",
-            "type": "Win32",
-            "description": "适用于 Windows PC 端梦幻西游客户端"
-        },
-        {
-            "name": "PlayCover",
-            "label": "PlayCover",
-            "type": "PlayCover",
-            "description": "部分任务存在兼容问题，不建议使用"
         }
     ],
     "agent": {
