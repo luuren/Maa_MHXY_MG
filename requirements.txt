@@ -2,11 +2,13 @@ colorama
 Levenshtein
 loguru
 MaaAgentBinary
-MaaFw==5.8.1
+MaaFw==5.10.1
 numpy
 pillow
 python-Levenshtein
 RapidFuzz
 StrEnum
 requests
+pydantic-core<2.43.0
+
 zai-sdk

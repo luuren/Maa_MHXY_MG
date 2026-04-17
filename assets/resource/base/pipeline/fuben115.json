@@ -17,7 +17,7 @@
             66,
             57
         ],
-        "post_delay": 3000,
+        "post_delay": 1000,
         "next": [
             "115识别位置-长安城-副本",
             "[JumpBack]打开大地图_69副本"
@@ -34,7 +34,7 @@
             117,
             31
         ],
-        "post_delay": 3000,
+        "post_delay": 1000,
         "next": [
             "115打开小地图_百晓仙子"
         ]
@@ -52,19 +52,38 @@
         ]
     },
     "115点击地图-百晓仙子": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [
@@ -82,18 +101,22 @@
     "再次点击地图百晓仙子": {
         "recognition": "TemplateMatch",
         "template": [
-            "fuben/baixiao.png",
-            "fuben/baixiao2.png",
-            "fuben/baixiao3.png"
+            "zonghe/xiaoditu_CA.png"
         ],
         "roi": [
-            421,
-            357,
-            106,
-            38
+            114,
+            69,
+            1040,
+            630
         ],
         "pre_delay": 1000,
         "action": "Click",
+        "target": [
+            437,
+            367,
+            77,
+            20
+        ],
         "post_delay": 1000
     },
     "115百晓仙子-选择副本": {
@@ -125,7 +148,7 @@
             42
         ],
         "action": "Click",
-        "post_delay": 200,
+        "post_delay": 500,
         "next": [
             "115进入50级侠士副本"
         ]
@@ -142,7 +165,7 @@
             52
         ],
         "action": "Click",
-        "post_delay": 4000,
+        "post_delay": 2000,
         "next": [
             "115进入50级侠士副本-成功",
             "[JumpBack]115进入侠士副本-等待队员同意",
@@ -186,7 +209,7 @@
             117,
             31
         ],
-        "pre_delay": 1000,
+        "pre_delay": 500,
         "action": "ClickKey",
         "key": [
             61
@@ -198,19 +221,38 @@
         ]
     },
     "115返回长安城-点击地图-百晓仙子": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [
@@ -357,19 +399,38 @@
         ]
     },
     "115点击地图-百晓仙子-50侠士(第二次进入)": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [
@@ -483,19 +544,38 @@
         ]
     },
     "115点击地图-百晓仙子-50普通-1": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [
@@ -592,19 +672,38 @@
         ]
     },
     "115点击地图-百晓仙子-50普通-2": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [
@@ -700,19 +799,38 @@
         ]
     },
     "115点击地图-百晓仙子-70普通-3": {
-        "recognition": "OCR",
-        "expected": [
-            "百晓",
-            "仙子",
-            "晓仙",
-            "晓",
-            "百晓仙子"
-        ],
-        "roi": [
-            396,
-            354,
-            153,
-            46
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "百晓",
+                    "仙子",
+                    "晓仙",
+                    "晓",
+                    "百晓仙子"
+                ],
+                "roi": [
+                    396,
+                    354,
+                    153,
+                    46
+                ]
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "fuben/baixiao.png",
+                    "fuben/baixiao2.png",
+                    "fuben/baixiao3.png"
+                ],
+                "roi": [
+                    421,
+                    357,
+                    106,
+                    38
+                ]
+            }
         ],
         "action": "Click",
         "target_offset": [

@@ -78,26 +78,44 @@
         ]
     },
     "点击钟馗": {
-        "recognition": "OCR",
-        "expected": [
-            "钟馗",
-            "钟道",
-            "钟",
-            "道"
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "zonghe/xiaoditu_CA.png"
+                ],
+                "roi": [
+                    114,
+                    69,
+                    1040,
+                    630
+                ]
+            },
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "钟馗",
+                    "钟道",
+                    "钟",
+                    "道"
+                ],
+                "roi": [
+                    357,
+                    391,
+                    72,
+                    43
+                ]
+            }
         ],
-        "roi": [
-            357,
-            391,
-            72,
-            43
-        ],
+        "pre_delay": 1000,
         "action": "Click",
         "post_delay": 3000,
-        "target_offset": [
-            0,
-            0,
-            -4,
-            -8
+        "target": [
+            377,
+            403,
+            38,
+            19
         ],
         "next": [
             "钟馗-捉鬼任务-循环",
@@ -177,41 +195,24 @@
         "post_delay": 500
     },
     "任务栏切换为任务": {
-        "recognition": "And",
-        "all_of": [
-            {
-                "recognition": "TemplateMatch",
-                "template": [
-                    "shimen/shimen_renwulan_zhankaizhong.png"
-                ],
-                "roi": [
-                    1038,
-                    110,
-                    57,
-                    58
-                ]
-            },
-            {
-                "recognition": "ColorMatch",
-                "upper": [
-                    177,
-                    175,
-                    145
-                ],
-                "lower": [
-                    28,
-                    31,
-                    22
-                ],
-                "roi": [
-                    1047,
-                    119,
-                    35,
-                    35
-                ],
-                "count": 950
-            }
+        "recognition": "ColorMatch",
+        "upper": [
+            177,
+            175,
+            145
         ],
+        "lower": [
+            28,
+            31,
+            22
+        ],
+        "roi": [
+            1047,
+            119,
+            35,
+            35
+        ],
+        "count": 950,
         "pre_delay": 1500,
         "action": "Click",
         "target": [
@@ -289,7 +290,8 @@
     "点击任务栏-捉鬼任务": {
         "recognition": "OCR",
         "expected": [
-            "^捉鬼[（(]\\d*/\\d*[）)]$",
+            "捉鬼[(（]\\d*/\\d*[)）]",
+            "捉拿.*鬼",
             "千年厉鬼"
         ],
         "roi": [
@@ -306,7 +308,8 @@
             "[JumpBack]自动寻路中-图片识别",
             "[JumpBack]战斗中-等待100秒",
             "[JumpBack]抓鬼-点击任务栏-通用",
-            "[JumpBack]任务栏切换为任务"
+            "[JumpBack]任务栏切换为任务",
+            "[JumpBack]关闭福利弹窗"
         ]
     },
     "抓鬼一轮完成": {

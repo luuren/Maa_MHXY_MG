@@ -4,6 +4,7 @@
         "next": [
             "清理主界面使用-关闭完成",
             "[JumpBack]清理主界面使用-关闭",
+            "[JumpBack]战斗平衡弹窗-点击关闭",
             "[JumpBack]panduan_zhujiemian"
         ]
     },
@@ -23,7 +24,6 @@
         ]
     },
     "清理主界面使用-关闭": {
-        "pre_delay": 200,
         "recognition": "TemplateMatch",
         "template": "zonghe/zhujiemian_shiyong_cha.png",
         "roi": [
@@ -32,6 +32,7 @@
             50,
             46
         ],
+        "pre_delay": 200,
         "action": "Click",
         "post_delay": 500
     },
@@ -70,7 +71,9 @@
             {
                 "recognition": "OCR",
                 "expected": [
-                    "包裹"
+                    "包裹",
+                    "包",
+                    "裹"
                 ],
                 "roi": [
                     1211,
@@ -164,7 +167,7 @@
         "next": [
             "点击藏宝图",
             "整理完成",
-            "[JumpBack]背包向上滑动1"
+            "[JumpBack]背包向上滑动10次"
         ]
     },
     "点击藏宝图": {
@@ -242,7 +245,7 @@
         "next": [
             "点击藏宝图",
             "挖宝图完成",
-            "[JumpBack]背包向上滑动1"
+            "[JumpBack]背包向上滑动10次"
         ]
     },
     "挖宝图完成": {

@@ -203,14 +203,13 @@ class sjqy_tiku_V3(CustomRecognition):
             "三界奇缘题目",
             image1,
             pipeline_override={"三界奇缘题目": {"roi" : [447,40,673,94],
-                                                "expected":[""],
+                                                "expected":[".*"],
                                                 "recognition": "OCR",
                                                 "replace":[
                                                     ["味","昧"],
                                                     ["邮","邺"],
-                                                    ["尺","尸"]
-                                                    
-
+                                                    ["尺","尸"],
+                                                    ["频","濒"]
                                                 ]
                                                 }
                                 }
@@ -224,9 +223,9 @@ class sjqy_tiku_V3(CustomRecognition):
             logger.info("没有识别到题目")
             # logger.info(f"未在题库中搜索到答案次数:{NotAnswerCount}，请反馈开发者填充题库。")
             return CustomRecognition.AnalyzeResult(box=(0,0,0,0),detail="答题结束")
-        all_results= reco_detail.all_results
+        filtered_results= reco_detail.filtered_results
         #按照box进行排序
-        sorted_results= sort_ocr_results_by_position(all_results)
+        sorted_results= sort_ocr_results_by_position(filtered_results)
         #整合题目
         ext=''
         for item in sorted_results:
@@ -238,13 +237,26 @@ class sjqy_tiku_V3(CustomRecognition):
         text = clean_string(ext)
         # 获取答案list[]
         results_value, confidence ,match_type = SearchQuestions(text)
+        # 获取时间并格式化
+        formatted = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         # 如果可信度为零，点击第一个答案
-        if confidence < 100:
+        if confidence < 80:
             # logger.info(f"题库中未找到答案，问题为:{text}.请反馈开发者填充题库")
             # 预留接口，未在题库中找得到问题，可以把截图发送到服务器。
             # context.tasker.controller.post_screencap().wait().save("{text}.png")
-            # 获取时间并格式化
-            formatted = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            # 发送到金山文档1.识别到的问题，2.匹配度，3.题库答案，4.时间
+            data_to_send = [text,confidence,results_value,formatted]
+            # logger.info(f"发送到金山文档的数据为:{data_to_send}")   
+            if SendJinSan.send(data_to_send):
+                logger.info(f"[color:red]未与题库匹配。[/color]识别题目：{text}，匹配度：{confidence}，已经登记在线文档")
+            else:
+                logger.error(f"登记在线文档失败:{text}")
+            time.sleep(2)
+            context.tasker.controller.post_click(500, 344).wait()
+            time.sleep(3)
+            return CustomRecognition.AnalyzeResult(box=(0,0,0,0),detail="题库缺少本问题")
+        elif confidence >=80 and confidence < 100:
+            
             # 发送到金山文档
             data_to_send = [text,confidence,results_value,formatted]
             # logger.info(f"发送到金山文档的数据为:{data_to_send}")   
@@ -252,10 +264,6 @@ class sjqy_tiku_V3(CustomRecognition):
                 logger.info(f"本问题与题库非100%匹配:{text},已经登记在线文档")
             else:
                 logger.error(f"登记在线文档失败:{text}")
-            time.sleep(2)
-            context.tasker.controller.post_click(500, 344).wait()
-            time.sleep(3)
-            return CustomRecognition.AnalyzeResult(box=(0,0,0,0),detail="题库缺少本问题")
         # 识别答案位置
         # new_context = context.clone()
         # image2 = context.tasker.controller.post_screencap().wait().get()
@@ -278,11 +286,14 @@ class sjqy_tiku_V3(CustomRecognition):
             time.sleep(2)
             click_job = context.tasker.controller.post_click(center_x, center_y)
             click_job.wait()  # 等待点击操作完成
-            logger.info(f"已在题库中找到答案")
+            # image2 = context.tasker.controller.post_screencap().wait().get()
+            # logger.info(image2)
+            logger.info(f"[color:blue]正确点击答案。[/color]识别题目：{text}。题库答案：{results_value}。匹配度：{confidence}。")
             time.sleep(2)
         else:#没找到答案，点击的一个
             time.sleep(2)
             context.tasker.controller.post_click(500, 344).wait()
+            logger.info(f"[color:red]未在界面找到答案，点击第一个答案。[/color]识别题目：{text}。题库答案：{results_value}。匹配度：{confidence}。")
             time.sleep(1)
 
         # logger.info(f"未在题库中搜索到答案次数:{NotAnswerCount}，请反馈开发者填充题库。")
