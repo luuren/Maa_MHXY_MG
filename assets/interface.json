@@ -146,7 +146,7 @@
             "option": [
                 "海底秘境模式"
             ],
-            "description": "选择海底秘境vs日月之井"
+            "description": "1.模式选择海底秘境vs日月之井。2.结束关卡选择。3.请自行判断退出关卡，只有在秘境自动停止到的关卡在可以实现结束。例如：在25关需要点击进入战斗等。请查看每个选项的说明"
         },
         {
             "name": "宝图任务",
@@ -182,7 +182,7 @@
             "option": [
                 "是否使用Ai进行答题"
             ],
-            "description": "1.默认不使用AI，全选A,2.科举乡试使用AI答题，请在填写Key,支持deepseek及智谱。"
+            "description": "./docs/description/kejuxiangshi.md"
         },
         {
             "name": "活跃领取",
@@ -220,7 +220,7 @@
             "option": [
                 "（开启/关闭）人员检测-（是否）进入轮次选择"
             ],
-            "description": "1.如果选择进入轮次选择，请输入需要执行的轮次（轮次为n+1轮），默认2轮。<br>2.不进入轮次为无限鬼。<br>3.五开建议关闭人员检测。<br>4.兼容手动领取任务后直接运行"
+            "description": "./docs/description/zhuoguirenwu.md"
         },
         {
             "name": "活力打工",
@@ -255,6 +255,41 @@
         {
             "name": "九黎演武",
             "entry": "jiuliyanwu"
+        },
+        {
+            "name": "五行修业",
+            "entry": "wuxingxiuye"
+        },
+        {
+            "name": "工坊考古",
+            "entry": "gongfang_kaogu",
+            "option": [
+                "考古次数",
+                "是否售卖真品"
+            ],
+            "description": "./docs/description/gongfang_kaogu.md"
+        },
+        {
+            "name": "队员挂机",
+            "entry": "5R_duiyuan",
+            "description": "1.自动同意组队邀请。2.自动同意侠义副本进入申请。3.被踢出队伍时任务结束"
+        },
+        {
+            "name": "队长踢人",
+            "entry": "5R_duizhang_TR",
+            "description": "踢出全部队员并退出队伍"
+        },
+        {
+            "name": "特殊助战",
+            "entry": "TS_zhuzhan",
+            "description": "伽蓝助战，每日聊天"
+        },
+        {
+            "name": "1",
+            "entry": "5R_duizhang",
+            "option": [
+                "邀请队员"
+            ]
         }
     ],
     "option": {
@@ -402,6 +437,7 @@
                             "next": [
                                 "活动-三界奇缘-结束",
                                 "主界面",
+                                "[JumpBack]清理主界面使用-关闭",
                                 "[JumpBack]活动-三界奇缘-开始答题",
                                 "[JumpBack]panduan_zhujiemian"
                             ]
@@ -415,6 +451,7 @@
                             "next": [
                                 "活动-三界奇缘-结束",
                                 "主界面",
+                                "[JumpBack]清理主界面使用-关闭",
                                 "[JumpBack]活动-三界奇缘-开始答题_agent",
                                 "[JumpBack]panduan_zhujiemian"
                             ]
@@ -486,10 +523,12 @@
             ]
         },
         "是否使用Ai进行答题": {
-            "type": "select",
+            "type": "switch",
+            "default_case": "Yes",
+            "description": "是否使用ai答题",
             "cases": [
                 {
-                    "name": "不适用AI",
+                    "name": "No",
                     "pipeline_override": {
                         "活动-科举乡试-进入答题界面": {
                             "next": [
@@ -501,33 +540,19 @@
                     }
                 },
                 {
-                    "name": "使用deepseek",
+                    "name": "Yes",
+                    "description": "支持OpenaiAPI规范的模型",
                     "pipeline_override": {
                         "活动-科举乡试-进入答题界面": {
                             "next": [
                                 "活动-科举乡试-结束-图片",
                                 "活动-科举乡试-结束ocr",
-                                "[JumpBack]活动-科举乡试-开始答题agent-Deepseek"
+                                "[JumpBack]活动-科举乡试-开始答题API"
                             ]
                         }
                     },
                     "option": [
-                        "Deepseek_apikey"
-                    ]
-                },
-                {
-                    "name": "使用智谱",
-                    "pipeline_override": {
-                        "活动-科举乡试-进入答题界面": {
-                            "next": [
-                                "活动-科举乡试-结束-图片",
-                                "活动-科举乡试-结束ocr",
-                                "[JumpBack]活动-科举乡试-开始答题agent-智谱"
-                            ]
-                        }
-                    },
-                    "option": [
-                        "zhipu_apikey"
+                        "Seed_apikey"
                     ]
                 }
             ]
@@ -566,36 +591,35 @@
                 }
             }
         },
-        "Deepseek_apikey": {
+        "Seed_apikey": {
             "type": "input",
+            "description": "支持OpenaiAPI规范的模型",
             "inputs": [
                 {
-                    "name": "Deepseek_apikey",
+                    "name": "apikey",
                     "pipeline_type": "string",
-                    "default": ""
+                    "default": "",
+                    "description": "API密钥"
+                },
+                {
+                    "name": "url",
+                    "pipeline_type": "string",
+                    "default": "",
+                    "description": "url链接"
+                },
+                {
+                    "name": "model",
+                    "pipeline_type": "string",
+                    "default": "",
+                    "description": "模型"
                 }
             ],
             "pipeline_override": {
-                "活动-科举乡试-开始答题agent-Deepseek": {
+                "活动-科举乡试-开始答题API": {
                     "attach": {
-                        "apikey": "{Deepseek_apikey}"
-                    }
-                }
-            }
-        },
-        "zhipu_apikey": {
-            "type": "input",
-            "inputs": [
-                {
-                    "name": "zhipu_apikey",
-                    "pipeline_type": "string",
-                    "default": ""
-                }
-            ],
-            "pipeline_override": {
-                "活动-科举乡试-开始答题agent-智谱": {
-                    "attach": {
-                        "apikey": "{zhipu_apikey}"
+                        "apikey": "{apikey}",
+                        "url": "{url}",
+                        "model": "{model}"
                     }
                 }
             }
@@ -710,24 +734,27 @@
                 {
                     "name": "海底秘境",
                     "pipeline_override": {
-                        "xuanze_mijing_moshi": {
+                        "秘境降妖-选择模式": {
                             "next": [
-                                "海底秘境-点击海底秘境"
+                                "秘境降妖-选择海底秘境"
                             ]
                         }
-                    }
+                    },
+                    "option": [
+                        "秘境-海底-结束关卡"
+                    ]
                 },
                 {
                     "name": "日月之井",
                     "pipeline_override": {
                         "mijingxiangyao": {
                             "next": [
-                                "xuanze_mijing_moshi",
+                                "秘境降妖-选择模式",
                                 "秘境降妖-日月之井-继续挑战",
                                 "[JumpBack]清理主界面使用-关闭"
                             ]
                         },
-                        "xuanze_mijing_moshi": {
+                        "秘境降妖-选择模式": {
                             "next": [
                                 "秘境降妖-点击日月之井"
                             ]
@@ -736,6 +763,65 @@
                     "option": [
                         "秘境-日月-结束关卡"
                     ]
+                }
+            ]
+        },
+        "秘境-海底-结束关卡": {
+            "type": "select",
+            "description": "请自行判断退出关卡，只有在秘境自动停止到的关卡在可以实现结束。例如：在24关需要点击进入战斗等。",
+            "default_case": "不提前退出",
+            "cases": [
+                {
+                    "name": "第25关",
+                    "description": "推荐89/115使用",
+                    "pipeline_override": {
+                        "海底秘境-指定关卡结束任务": {
+                            "expected": [
+                                "第25关"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "第24关",
+                    "pipeline_override": {
+                        "海底秘境-指定关卡结束任务": {
+                            "expected": [
+                                "第24关"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "第21关",
+                    "pipeline_override": {
+                        "海底秘境-指定关卡结束任务": {
+                            "expected": [
+                                "第21关"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "第18关",
+                    "description": "69级使用",
+                    "pipeline_override": {
+                        "海底秘境-指定关卡结束任务": {
+                            "expected": [
+                                "第18关"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "不提前退出",
+                    "pipeline_override": {
+                        "海底秘境-指定关卡结束任务": {
+                            "expected": [
+                                "第60关"
+                            ]
+                        }
+                    }
                 }
             ]
         },
@@ -764,15 +850,107 @@
                     }
                 }
             ]
+        },
+        "考古次数": {
+            "type": "input",
+            "inputs": [
+                {
+                    "name": "考古几轮",
+                    "pipeline_type": "int",
+                    "default": "1"
+                }
+            ],
+            "pipeline_override": {
+                "考古次数": {
+                    "max_hit": "{考古几轮}"
+                }
+            }
+        },
+        "是否售卖真品": {
+            "type": "switch",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "古董售卖-界面": {}
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "古董售卖-界面": {
+                            "next": [
+                                "古董售卖-售卖完成",
+                                "古董售卖-界面-非真品售卖完成",
+                                "[JumpBack]古董售卖-界面-点击售卖"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "邀请队员": {
+            "type": "input",
+            "inputs": [
+                {
+                    "name": "队员1",
+                    "pipeline_type": "string",
+                    "default": ""
+                },
+                {
+                    "name": "队员2",
+                    "pipeline_type": "string",
+                    "default": ""
+                },
+                {
+                    "name": "队员3",
+                    "pipeline_type": "string",
+                    "default": ""
+                },
+                {
+                    "name": "队员4",
+                    "pipeline_type": "string",
+                    "default": ""
+                }
+            ],
+            "pipeline_override": {
+                "邀请队员-输入队员名称1": {
+                    "input_text": "{队员1}"
+                },
+                "邀请队员-输入队员名称2": {
+                    "input_text": "{队员2}"
+                },
+                "邀请队员-输入队员名称3": {
+                    "input_text": "{队员3}"
+                },
+                "邀请队员-输入队员名称4": {
+                    "input_text": "{队员4}"
+                }
+            }
         }
     },
     "preset": [
         {
-            "name": "日常任务",
+            "name": "115级队长日常任务",
             "description": "内置日常任务，作者推荐，一键配置所有任务",
             "task": [
                 {
-                    "name": "退出队伍"
+                    "name": "创建队伍",
+                    "option": {
+                        "创建（副本/捉鬼）任务": "创建520副本任务",
+                        "任务描述(用户输入)": {
+                            "任务描述": "520"
+                        }
+                    }
+                },
+                {
+                    "name": "副本520(89/115)",
+                    "option": {
+                        "全自动/手动接取双侠士任务选项": "全自动"
+                    }
+                },
+                {
+                    "name": "队长踢人"
                 },
                 {
                     "name": "福利签到"
@@ -788,6 +966,9 @@
                 },
                 {
                     "name": "秘境降妖"
+                },
+                {
+                    "name": "整理背包"
                 },
                 {
                     "name": "宝图任务"
@@ -813,9 +994,11 @@
                 {
                     "name": "科举乡试",
                     "option": {
-                        "是否使用Ai进行答题": "使用智谱",
-                        "zhipu_apikey": {
-                            "zhipu_apikey": ""
+                        "是否使用Ai进行答题": "Yes",
+                        "Seed_apikey": {
+                            "apikey": "",
+                            "url": "",
+                            "model": ""
                         }
                     }
                 },
@@ -837,8 +1020,8 @@
             ]
         },
         {
-            "name": "69级320",
-            "description": "内置69级320任务，作者推荐，一键配置所有任务",
+            "name": "69级队长日常任务",
+            "description": "内置日常任务，作者推荐，一键配置所有任务",
             "task": [
                 {
                     "name": "创建队伍",
@@ -856,31 +1039,173 @@
                     }
                 },
                 {
-                    "name": "退出队伍"
-                }
-            ]
-        },
-        {
-            "name": "89/115级520",
-            "description": "内置89/115级520任务，作者推荐，一键配置所有任务",
-            "task": [
+                    "name": "队长踢人"
+                },
                 {
-                    "name": "创建队伍",
+                    "name": "福利签到"
+                },
+                {
+                    "name": "帮派签到"
+                },
+                {
+                    "name": "整理背包"
+                },
+                {
+                    "name": "师门任务"
+                },
+                {
+                    "name": "秘境降妖"
+                },
+                {
+                    "name": "整理背包"
+                },
+                {
+                    "name": "宝图任务"
+                },
+                {
+                    "name": "挖宝图"
+                },
+                {
+                    "name": "出售商会"
+                },
+                {
+                    "name": "运镖普通",
                     "option": {
-                        "创建（副本/捉鬼）任务": "创建520副本任务",
-                        "任务描述(用户输入)": {
-                            "任务描述": "520"
+                        "是否检测活力到50": "No"
+                    }
+                },
+                {
+                    "name": "三界奇缘",
+                    "option": {
+                        "是否选择题库": "Yes"
+                    }
+                },
+                {
+                    "name": "科举乡试",
+                    "option": {
+                        "是否使用Ai进行答题": "Yes",
+                        "Seed_apikey": {
+                            "apikey": "",
+                            "url": "",
+                            "model": ""
                         }
                     }
                 },
                 {
-                    "name": "副本520(89/115)",
+                    "name": "活跃领取"
+                },
+                {
+                    "name": "家园整理"
+                },
+                {
+                    "name": "趣闻鉴赏"
+                },
+                {
+                    "name": "宠物祈福",
                     "option": {
-                        "全自动/手动接取双侠士任务选项": "全自动"
+                        "是否使用自选宠物祈福": "No"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "队员日常任务",
+            "description": "内置日常任务，作者推荐，一键配置所有任务",
+            "task": [
+                {
+                    "name": "队员挂机"
+                },
+                {
+                    "name": "福利签到"
+                },
+                {
+                    "name": "帮派签到"
+                },
+                {
+                    "name": "整理背包"
+                },
+                {
+                    "name": "师门任务"
+                },
+                {
+                    "name": "秘境降妖"
+                },
+                {
+                    "name": "整理背包"
+                },
+                {
+                    "name": "宝图任务"
+                },
+                {
+                    "name": "挖宝图"
+                },
+                {
+                    "name": "出售商会"
+                },
+                {
+                    "name": "运镖普通",
+                    "option": {
+                        "是否检测活力到50": "No"
                     }
                 },
                 {
-                    "name": "退出队伍"
+                    "name": "三界奇缘",
+                    "option": {
+                        "是否选择题库": "Yes"
+                    }
+                },
+                {
+                    "name": "科举乡试",
+                    "option": {
+                        "是否使用Ai进行答题": "Yes",
+                        "Seed_apikey": {
+                            "apikey": "",
+                            "url": "",
+                            "model": ""
+                        }
+                    }
+                },
+                {
+                    "name": "活跃领取"
+                },
+                {
+                    "name": "家园整理"
+                },
+                {
+                    "name": "趣闻鉴赏"
+                },
+                {
+                    "name": "宠物祈福",
+                    "option": {
+                        "是否使用自选宠物祈福": "No"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "其他任务",
+            "description": "非日常、非副本任务",
+            "task": [
+                {
+                    "name": "门派闯关"
+                },
+                {
+                    "name": "迷魂塔"
+                },
+                {
+                    "name": "召唤灵海底"
+                },
+                {
+                    "name": "九黎演武"
+                },
+                {
+                    "name": "五行修业"
+                },
+                {
+                    "name": "捉鬼任务-无限/手动选择执行几轮"
+                },
+                {
+                    "name": "工坊考古"
                 }
             ]
         }

@@ -146,7 +146,6 @@
         ],
         "post_delay": 2000,
         "next": [
-            "[JumpBack]捉鬼-没有辅助提示-点击取消",
             "[JumpBack]展开-首页任务栏",
             "[JumpBack]任务栏切换为任务",
             "点击任务栏-捉鬼任务",
@@ -171,7 +170,9 @@
         "action": "Click",
         "post_delay": 2000,
         "next": [
+            "[JumpBack]抓鬼领取双倍弹窗",
             "[JumpBack]捉鬼-没有辅助提示-点击取消",
+            "[JumpBack]抓鬼不足五人-图片识别",
             "[JumpBack]展开-首页任务栏",
             "[JumpBack]任务栏切换为任务",
             "点击任务栏-捉鬼任务",
@@ -213,7 +214,7 @@
             35
         ],
         "count": 950,
-        "pre_delay": 1500,
+        "pre_delay": 1000,
         "action": "Click",
         "target": [
             1044,
@@ -221,7 +222,7 @@
             101,
             50
         ],
-        "post_delay": 1500
+        "post_delay": 1000
     },
     "捉鬼-下滑任务栏": {
         "max_hit": 4,
@@ -286,6 +287,77 @@
             "[JumpBack]展开-首页任务栏",
             "[JumpBack]捉鬼-下滑任务栏"
         ]
+    },
+    "捉鬼-领取任务失败-再次尝试领取-打开小地图": {
+        "max_hit": 1,
+        "pre_delay": 500,
+        "action": "ClickKey",
+        "key": [
+            61
+        ],
+        "post_delay": 1000,
+        "next": [
+            "捉鬼-领取任务失败-再次尝试领取-点击钟馗",
+            "[JumpBack]小地图-按键打开失败-点击小地图图标"
+        ]
+    },
+    "捉鬼-领取任务失败-再次尝试领取-点击钟馗": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": [
+                    "zonghe/xiaoditu_CA.png"
+                ],
+                "roi": [
+                    114,
+                    69,
+                    1040,
+                    630
+                ]
+            },
+            {
+                "recognition": "OCR",
+                "expected": [
+                    "钟馗",
+                    "钟道",
+                    "钟",
+                    "道"
+                ],
+                "roi": [
+                    357,
+                    391,
+                    72,
+                    43
+                ]
+            }
+        ],
+        "pre_delay": 1000,
+        "action": "Click",
+        "post_delay": 3000,
+        "target": [
+            377,
+            403,
+            38,
+            19
+        ],
+        "next": [
+            "捉鬼-领取任务失败-再次尝试领取-点击捉鬼任务"
+        ]
+    },
+    "捉鬼-领取任务失败-再次尝试领取-点击捉鬼任务": {
+        "recognition": "OCR",
+        "expected": [
+            "捉鬼任务"
+        ],
+        "roi": [
+            925,
+            73,
+            312,
+            482
+        ],
+        "pre_delay": 500,
+        "action": "Click"
     },
     "点击任务栏-捉鬼任务": {
         "recognition": "OCR",
@@ -400,7 +472,9 @@
     "抓鬼轮次计算-max": {
         "max_hit": 2,
         "next": [
-            "钟馗-捉鬼任务-循环"
+            "钟馗-捉鬼任务-循环",
+            "[JumpBack]任务栏切换为任务",
+            "[JumpBack]抓鬼-关闭组队后打开小地图"
         ]
     },
     "抓鬼轮次计算-max-结束": {
@@ -443,13 +517,13 @@
     "捉鬼-进入组队界面成功": {
         "recognition": "TemplateMatch",
         "template": [
-            "duiwu/duiwu-jiemian.png"
+            "duiwu/duiwu-duiwu.png"
         ],
         "roi": [
-            361,
-            2,
-            532,
-            67
+            0,
+            0,
+            229,
+            106
         ],
         "threshold": 0.9,
         "next": [
@@ -465,9 +539,9 @@
         ],
         "roi": [
             341,
-            433,
-            749,
-            40
+            432,
+            757,
+            41
         ],
         "action": "Click",
         "post_delay": 1000,
@@ -496,9 +570,9 @@
         "recognition": "OCR",
         "expected": "自动匹配",
         "roi": [
-            955,
-            84,
-            156,
+            1024,
+            57,
+            152,
             60
         ],
         "pre_delay": 1000,
@@ -527,9 +601,9 @@
         "recognition": "OCR",
         "expected": "自动匹配",
         "roi": [
-            955,
-            84,
-            156,
+            1024,
+            57,
+            152,
             60
         ],
         "pre_delay": 1000,
@@ -544,9 +618,9 @@
         "recognition": "OCR",
         "expected": "自动匹配",
         "roi": [
-            955,
-            84,
-            156,
+            1024,
+            57,
+            152,
             60
         ],
         "next": [
@@ -557,10 +631,10 @@
         "recognition": "TemplateMatch",
         "template": "duiwu/duiwu-guanbi.png",
         "roi": [
-            1070,
-            12,
-            66,
-            59
+            1153,
+            0,
+            100,
+            98
         ],
         "pre_delay": 1000,
         "action": "Click",

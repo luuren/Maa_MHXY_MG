@@ -163,7 +163,7 @@
             103,
             159
         ],
-        "pre_wait_freezes": 100000
+        "pre_delay": 100000
     },
     "战斗中-等待50秒": {
         "recognition": "TemplateMatch",
@@ -177,7 +177,7 @@
             103,
             159
         ],
-        "pre_wait_freezes": 50000
+        "pre_delay": 50000
     },
     "战斗中-等待20秒": {
         "recognition": "TemplateMatch",
@@ -336,5 +336,38 @@
             ]
         ]
     },
-    "空节点": {}
+    "空节点": {},
+    "识别输出测试": {
+        "recognition": "OCR",
+        "expected": [],
+        "roi": [
+            916,
+            316,
+            139,
+            45
+        ],
+        "action": "Custom",
+        "custom_action": "returnOCR",
+        "custom_action_param": {
+            "recognition_name": "识别输出测试",
+            "action_key": "Click",
+            "return_text": "输出的描述"
+        },
+        "next": []
+    },
+    "关闭整点活动弹窗": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "zonghe/renwu_tanchuang.png"
+        ],
+        "roi": [
+            846,
+            394,
+            80,
+            83
+        ],
+        "pre_delay": 500,
+        "action": "Click",
+        "post_delay": 500
+    }
 }
